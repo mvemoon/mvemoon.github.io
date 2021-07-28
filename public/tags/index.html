@@ -10,7 +10,7 @@
   
   <title>
     
-      xiaoy&#39;s satellite
+      Tags | xiaoy&#39;s satellite
     
   </title>
   <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
@@ -76,7 +76,7 @@
       
         <li class="list-item">
           
-            <a href="/" class="item-link active">Home</a>
+            <a href="/" class="item-link">Home</a>
           
         </li>
       
@@ -128,7 +128,7 @@
         
           <li class="menu-item">
             
-              <a href="/" class="menu-link mobile-active">Home</a>
+              <a href="/" class="menu-link">Home</a>
             
           </li>
         
@@ -191,56 +191,32 @@
   </div>
 </header>
 
-    <main class="app-body">
-  
-    <article class="article-card">
-      <h2 class="article-head">
-        <a href="/2021/07/28/Bits-Intergers-Floating-Points/">Bits & Intergers & Floating Points</a>
-      </h2>
-      <p class="article-date">2021年7月28日</p>
-      
-      <div class="article-summary">
-        
-          Bits &amp; Interters &amp; Floating Points计算机以二进制理解世界，也就是一串0和1，重要的是bit representation（二进制表示）以及 decoding（解读方式)。以文件的传输为例，ASCII文件中的文字首先被编码成二进制形式，然后发送 ...
-        
-      </div>
-      <a class="more" href="/2021/07/28/Bits-Intergers-Floating-Points/">Read more</a>
-    </article>
-  
-    <article class="article-card">
-      <h2 class="article-head">
-        <a href="/2021/07/28/test/">test</a>
-      </h2>
-      <p class="article-date">2021年7月28日</p>
-      
-      <div class="article-summary">
-        
-          1234int main(void)&#123;&#125;
-
-        
-      </div>
-      <a class="more" href="/2021/07/28/test/">Read more</a>
-    </article>
-  
-    <article class="article-card">
-      <h2 class="article-head">
-        <a href="/2021/07/28/hello-world/">Hello World</a>
-      </h2>
-      <p class="article-date">2021年7月28日</p>
-      
-      <div class="article-summary">
-        
-          Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer ...
-        
-      </div>
-      <a class="more" href="/2021/07/28/hello-world/">Read more</a>
-    </article>
-  
-
+    <div id="article-banner">
+  <h2>Tags</h2>
+  <p class="post-date">Tag Retrieval</p>
+</div>
+<main class="app-body">
+  <div id="tag-cloud">
+    
+  </div>
   
 </main>
 
+<script>
+  (function () {
+    var url = 'http://mvemoon.github.io/tags/index.html'
+    $('#article-banner').geopattern(url)
+    $('.header').removeClass('fixed-header')
 
+    var tag = location.hash.replace('#', '')
+    if (tag) {
+      var tagId = "#tag-" + tag;
+      $("html, body").animate({
+        scrollTop: $(tagId).offset().top 
+      }, 400)
+    }
+  })();
+</script>
     <div class="scroll-top">
   <span class="arrow-icon"></span>
 </div>

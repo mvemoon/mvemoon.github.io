@@ -10,7 +10,7 @@
   
   <title>
     
-      xiaoy&#39;s satellite
+      Project | xiaoy&#39;s satellite
     
   </title>
   <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
@@ -76,7 +76,7 @@
       
         <li class="list-item">
           
-            <a href="/" class="item-link active">Home</a>
+            <a href="/" class="item-link">Home</a>
           
         </li>
       
@@ -128,7 +128,7 @@
         
           <li class="menu-item">
             
-              <a href="/" class="menu-link mobile-active">Home</a>
+              <a href="/" class="menu-link">Home</a>
             
           </li>
         
@@ -191,56 +191,56 @@
   </div>
 </header>
 
-    <main class="app-body">
-  
-    <article class="article-card">
-      <h2 class="article-head">
-        <a href="/2021/07/28/Bits-Intergers-Floating-Points/">Bits & Intergers & Floating Points</a>
-      </h2>
-      <p class="article-date">2021年7月28日</p>
-      
-      <div class="article-summary">
-        
-          Bits &amp; Interters &amp; Floating Points计算机以二进制理解世界，也就是一串0和1，重要的是bit representation（二进制表示）以及 decoding（解读方式)。以文件的传输为例，ASCII文件中的文字首先被编码成二进制形式，然后发送 ...
-        
-      </div>
-      <a class="more" href="/2021/07/28/Bits-Intergers-Floating-Points/">Read more</a>
-    </article>
-  
-    <article class="article-card">
-      <h2 class="article-head">
-        <a href="/2021/07/28/test/">test</a>
-      </h2>
-      <p class="article-date">2021年7月28日</p>
-      
-      <div class="article-summary">
-        
-          1234int main(void)&#123;&#125;
-
-        
-      </div>
-      <a class="more" href="/2021/07/28/test/">Read more</a>
-    </article>
-  
-    <article class="article-card">
-      <h2 class="article-head">
-        <a href="/2021/07/28/hello-world/">Hello World</a>
-      </h2>
-      <p class="article-date">2021年7月28日</p>
-      
-      <div class="article-summary">
-        
-          Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer ...
-        
-      </div>
-      <a class="more" href="/2021/07/28/hello-world/">Read more</a>
-    </article>
-  
-
-  
+    <div id="article-banner">
+  <h2>Projects</h2>
+  <p class="post-date">GitHub Open Source Projects</p>
+</div>
+<main class="app-body project-app">
+  <div class="card-container" id="all-project"></div>
 </main>
-
-
+<script>
+  (function() {
+    var url = 'http://mvemoon.github.io/project/index.html';
+    $('#article-banner').geopattern(url);
+    $('.header').removeClass('fixed-header')
+    $.ajax({
+      headers: {
+        Accept: 'application/vnd.github.v3.raw'
+      },
+      type: 'get',
+      url: 'https://api.github.com/users/yanm1ng/repos',
+      success: function (data) {
+        var repos = data.sort(function(a, b) {
+          return (b.stargazers_count - a.stargazers_count)
+        }).slice(0, 6)
+        var cardHtml = repos.map(function(item) {
+          var description = item.description || ""
+          if (description.replace(/[\u0391-\uFFE5]/g, "aa").length > 72) {
+            description = description.slice(0, 72) + '...'
+          }
+          return (
+            '<section class="project-card">' + 
+              '<a class="card-wrap" href="'+ item.html_url +'" target="_blank">' +
+                '<div class="card-header" data-name="'+ item.name +'"></div>' +
+                '<h3 class="card-title">' + item.name + '</h3>' +
+                '<p class="card-description">' + description + '</p>' +
+                '<div class="card-footer">' +
+                  '<span><i class="fa fa-star"></i>'+ item.stargazers_count +'</span>' +
+                  '<span><i class="fa fa-code-fork"></i>' + item.forks_count +'</span>' +
+                '</div>' +
+              '</a>' +
+            '</section>'
+          )
+        }).join('')
+        $('#all-project').html(cardHtml)
+        $('.card-header').each(function() {
+          var name = $(this).data('name');
+          $(this).geopattern(name);
+        })
+      }
+    });
+  })()
+</script>
     <div class="scroll-top">
   <span class="arrow-icon"></span>
 </div>
