@@ -2,6 +2,7 @@
 title: Bits & Intergers & Floating Points
 date: 2021-07-28 22:01:50
 tags:
+mathjax: true
 ---
 
 # Bits & Interters & Floating Points
@@ -191,5 +192,9 @@ int tmult_ok(int x, int y)
 ```
 > Tips : size_t被定义为unsigned类型，而malloc接收一个size_t类型，那么溢出后得到一个较小的整数的话是无法被发现的，只能在malloc前对其siz做溢出检测。
 
+## Floating Point
+首先给出浮点数的一般表达式
 
-
+$$
+v = (-1)^s*M*2^E
+$$
