@@ -1,0 +1,265 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Bits &amp; Intergers &amp; Floating Points | xiaoy's satellite</title><meta name="author" content="xiaoy"><meta name="copyright" content="xiaoy"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Bits &amp; Interters &amp; Floating PointsBit计算机以二进制理解世界，也就是一串0和1，重要的是bit representation（二进制表示）以及 decoding（解读方式)。以文件的传输为例，ASCII文件中的文字首先被编码成二进制形式，然后发送给接收者，接收端以一定的规则解码得到原来的文件。1发送者 (encoding) ------&gt;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Bits &amp; Intergers &amp; Floating Points">
+<meta property="og:url" content="http://mvemoon.github.io/2021/07/28/Bits-Intergers-Floating-Points/index.html">
+<meta property="og:site_name" content="xiaoy&#39;s satellite">
+<meta property="og:description" content="Bits &amp; Interters &amp; Floating PointsBit计算机以二进制理解世界，也就是一串0和1，重要的是bit representation（二进制表示）以及 decoding（解读方式)。以文件的传输为例，ASCII文件中的文字首先被编码成二进制形式，然后发送给接收者，接收端以一定的规则解码得到原来的文件。1发送者 (encoding) ------&gt;">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png">
+<meta property="article:published_time" content="2021-07-28T14:01:50.000Z">
+<meta property="article:modified_time" content="2021-08-02T03:14:59.900Z">
+<meta property="article:author" content="xiaoy">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://mvemoon.github.io/2021/07/28/Bits-Intergers-Floating-Points/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Bits & Intergers & Floating Points',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-08-02 11:14:59'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if (GLOBAL_CONFIG_SITE.isHome && /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">12</div></a></div></div></div><hr/></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">xiaoy's satellite</a></span><div id="menus"><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Bits &amp; Intergers &amp; Floating Points</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-07-28T14:01:50.000Z" title="发表于 2021-07-28 22:01:50">2021-07-28</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2021-08-02T03:14:59.900Z" title="更新于 2021-08-02 11:14:59">2021-08-02</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Bits &amp; Intergers &amp; Floating Points"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="Bits-amp-Interters-amp-Floating-Points"><a href="#Bits-amp-Interters-amp-Floating-Points" class="headerlink" title="Bits &amp; Interters &amp; Floating Points"></a>Bits &amp; Interters &amp; Floating Points</h1><h2 id="Bit"><a href="#Bit" class="headerlink" title="Bit"></a>Bit</h2><p>计算机以二进制理解世界，也就是一串0和1，重要的是bit representation（二进制表示）以及 decoding（解读方式)。<br>以文件的传输为例，ASCII文件中的文字首先被编码成二进制形式，然后发送给接收者，接收端以一定的规则解码得到原来的文件。<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">发送者 (encoding) ------&gt; 01100110 (decoding)------&gt; 接收者</span><br></pre></td></tr></table></figure><br>decoding方式带来的影响：<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">以4-bit的data type 为例</span><br><span class="line">1111 --       int     --&gt; -1</span><br><span class="line">1111 --  unsigned int --&gt; 15</span><br></pre></td></tr></table></figure><br>由于 int 采用补码形式表示，而usigned不是导致值不同（后文详解）</p>
+<h3 id="Data-Size"><a href="#Data-Size" class="headerlink" title="Data Size"></a>Data Size</h3><p>1 bit 即是1个0或1，8 bits == 1 byte, 16 bits == 2 bytes == 1 words<br>word size 就是指针所占的字位数</p>
+<h3 id="Address"><a href="#Address" class="headerlink" title="Address"></a>Address</h3><p>当我们谈到计算机的内存与地址时，一般指的是虚拟内存，每一bit都有它的地址</p>
+<h3 id="Byte-Ordering"><a href="#Byte-Ordering" class="headerlink" title="Byte Ordering"></a>Byte Ordering</h3><p>既然bit都有自己的地址，那么连续的bits的地址一定是连续的，它们存储方式有两种big endian, little endian。<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">address        0x100  0x101  0x102 0x103</span><br><span class="line">big endian        01     23     45    67</span><br><span class="line">little endian     67     45     23    01</span><br></pre></td></tr></table></figure><br>big endian 即是大地址结尾，而little endian 即是以小地址结尾。<br>在我的机子上，其以little endian方式存储，可以用以下的C代码验证<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">show_bytes</span><span class="params">(<span class="keyword">char</span>* c_p, <span class="keyword">size_t</span> n)</span></span></span><br><span class="line"><span class="function"></span>&#123;<span class="function">i</span></span><br><span class="line"><span class="function">		<span class="title">for</span><span class="params">(<span class="keyword">size_t</span> i = <span class="number">0</span>; i&lt;n; i++)</span></span></span><br><span class="line"><span class="function">		</span>&#123;</span><br><span class="line">				<span class="built_in">printf</span>(<span class="string">&quot;%X &quot;</span>, *c_p);</span><br><span class="line">				c_p++;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="built_in">puts</span>(<span class="string">&quot;&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> m = <span class="number">0x12345678</span>;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%X\n&quot;</span>, m);</span><br><span class="line">	show_bytes((<span class="keyword">char</span>*)(&amp;m), <span class="keyword">sizeof</span>(<span class="keyword">int</span>));</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">./endian</span><br><span class="line">12345678</span><br><span class="line">78 56 34 12  </span><br></pre></td></tr></table></figure>
+<p>了解大小端的意义如下：</p>
+<ul>
+<li>网络传输大多用big-endian, 而计算机一般用little-endian</li>
+<li>汇编、机器码的顺序</li>
+<li>C中的cast操作，如union可能带来问题</li>
+</ul>
+<h3 id="String-ASCII"><a href="#String-ASCII" class="headerlink" title="String (ASCII)"></a>String (ASCII)</h3><p>由于ASCII的范围0~127，每一次都读取一个byte，所以不受大小端的影响</p>
+<hr>
+<h2 id="Intergers"><a href="#Intergers" class="headerlink" title="Intergers"></a>Intergers</h2><h3 id="Unsigned-amp-Two’s-Complement"><a href="#Unsigned-amp-Two’s-Complement" class="headerlink" title="Unsigned &amp; Two’s Complement"></a>Unsigned &amp; Two’s Complement</h3><p>假设有一个data的bit vector, [w<sub>k-1</sub>, w<sub>k-2</sub> .. w<sub>0</sub>], unsigned : 求和每一位的2的次幂乘以w<sub>x</sub>, Two’s Complement ： 第一位为符号位，其拥有负权重2<sub>k-1&lt;/sup&gt;。</p>
+<p>这也即当符号为为1时，其值为负而0为正的原因：最大的负数 -1 ： 2<sub>k-1&lt;/sup&gt; + (2<sub>k-1&lt;/sup&gt; -1)，同时记U至T的转换为U2T(x) = x<sub>t</sub> - w<sub>k-1</sub> * 2<sub>k&lt;/sup&gt;</p>
+<hr>
+<h3 id="Bit-Level-Operations"><a href="#Bit-Level-Operations" class="headerlink" title="Bit-Level Operations"></a>Bit-Level Operations</h3><p>&amp;（位与） |（位或）^(异或) &gt;&gt;（右移） &lt;&lt;(左移)    ~(取补码)<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&amp;  0 1       |  0 1     ^ 0 1    ~ 0 1</span><br><span class="line">0  0 0       0  0 1     0 0 1      </span><br><span class="line">1  0 1       1  1 1     1 1 0      1 0</span><br></pre></td></tr></table></figure></p>
+<h4 id="关于-amp-amp-amp"><a href="#关于-amp-amp-amp" class="headerlink" title="关于 &amp;,&amp;&amp;　　|,||"></a>关于 &amp;,&amp;&amp;　　|,||</h4><p>当逻辑运算符&amp;&amp;，||操作的对象为一个bit时，相当于&amp;, |</p>
+<h4 id="关于"><a href="#关于" class="headerlink" title="关于~"></a>关于~</h4><p><strong>x　+　~x+1　=　0</strong>　也即~x+1为x的加法逆元</p>
+<h4 id="关于-1"><a href="#关于-1" class="headerlink" title="关于 ^"></a>关于 ^</h4><ul>
+<li>用于Floating Points符号位的计算较为方便（NaN除外）, 相当于求其加法逆元(Integers用~x+1方便)</li>
+<li>x^x = 0</li>
+</ul>
+<h4 id="左移-右移"><a href="#左移-右移" class="headerlink" title="左移　右移"></a>左移　右移</h4><p>左移、右移顾名思义就是将bit vector向左、右移动，多出来的bit自然舍去，问题在于缺少的bit位是用0/1来补，而这在U/T的表现又不同</p>
+<p>U/T 左移 ： 用0补齐缺少位，称为逻辑左移</p>
+<p>U 右移 ： 用0补齐缺少位，称为逻辑右移</p>
+<p>T 右移 ： 补齐位与符号位一致，可以为0/1，称为算术右移<br>　<br>左移k位，所有对应位的权重都增大k,相当于乘以 2<sub>k&lt;/sup&gt;  （int符号位虽然是负权重，但是结果相同）</p>
+<p>右移k位，所有对应位的权重都减少k,相当于除以 2<sub>k&lt;/sup&gt; ,需要注意的是结果需要<strong>Rounding</strong>(取整)。C中的整数取整都是向0取整，而应用&gt;&gt;时正数：向下取整，也即向0取整，而对于负数来说，其依然是向下取整，所有需要加上相应的bias,使其满足向0取整。bias = 1 &lt;&lt; k-1</p>
+<h3 id="Conversion"><a href="#Conversion" class="headerlink" title="Conversion"></a>Conversion</h3><p>转变分为三种</p>
+<ul>
+<li>int 与 unsigned int</li>
+<li>小字节类型转大字节类型</li>
+<li>大字节类型转小字节类型</li>
+</ul>
+<p>int 与 unsigned int 的转换在C中并不改变其bit-represention,只是改变其解读形式。</p>
+<p>大字节转小字节则是要截断高位。</p>
+<p>小字节转大字节，则需要拓展高位，这其中又分为sign expansion &amp;&amp; zero expansion。</p>
+<p>　　首先考虑U-U的小转大，采用零拓展，即高位全用0填补。<br>　　T-T的拓展，采用符号拓展，即高位拓展取决与符号为。<br>　　那么U-T,T-U的小字节转大字节是怎么实现的呢？规律是先变size再改变类型。也就是其拓展与改变前的拓展类型一致，举例如下：<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">short</span> <span class="keyword">int</span> s_u = <span class="number">0xcfff</span>;</span><br><span class="line">	<span class="keyword">short</span> <span class="keyword">int</span> <span class="keyword">s_t</span> = <span class="number">0xcfff</span>;</span><br><span class="line">	<span class="keyword">int</span> i_u = (<span class="keyword">int</span>)s_u;</span><br><span class="line">	<span class="keyword">int</span> <span class="keyword">i_t</span> = (<span class="keyword">int</span>)<span class="keyword">s_t</span>;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;i_u : %x\n&quot;</span>, i_u);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;i_t : %x\n&quot;</span>, <span class="keyword">i_t</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">i_u : cfff</span><br><span class="line">i_t : ffffcfff</span><br></pre></td></tr></table></figure></p>
+<h3 id="Integers-Arithmetic"><a href="#Integers-Arithmetic" class="headerlink" title="Integers Arithmetic"></a>Integers Arithmetic</h3><p>这些运算以及数据本身构成了群，如无整型与加法构成了无整型加群，在这里引入群中的一个概念，加法逆元，若a+b=0，则称b为a的逆元。</p>
+<h4 id="Modular-addition"><a href="#Modular-addition" class="headerlink" title="Modular addition"></a>Modular addition</h4><p>加法其实是Modualr addition,即对最后的结果取模。<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">        U                    T</span><br><span class="line">	 x=<span class="number">0</span>:    x          x=Tmin: Tmin </span><br><span class="line">-x                         </span><br><span class="line">	 x&gt;<span class="number">0</span>:   <span class="number">2</span>**w - x    x&gt;Tmin: -x</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">溢出检测：</span><br><span class="line">     !(x + y &lt; x)       !(x&lt;<span class="number">0</span> &amp;&amp; y&lt;<span class="number">0</span> &amp;&amp; sum &gt;=<span class="number">0</span>) &amp;&amp; !(x&gt;=<span class="number">0</span> &amp;&amp; y&gt;=<span class="number">0</span> &amp;&amp; sum&lt;<span class="number">0</span>) (OR !((x&lt;<span class="number">0</span> == y&lt;<span class="number">0</span>) &amp;&amp; (sum&lt;<span class="number">0</span> != x&lt;<span class="number">0</span>)))</span><br></pre></td></tr></table></figure><br>加法逆元的C表达式：</p>
+<blockquote>
+<p>~x+1</p>
+</blockquote>
+<h4 id="Muplication"><a href="#Muplication" class="headerlink" title="Muplication"></a>Muplication</h4><p>unsigned 计算时同样时将结果mod 2<sub>w</sub>, signed计算则是先将其转为unsigned计算，最后转回signed。这也同样表明了两种类型的乘法运算结果truncted后的bit-representation是一样的。</p>
+<p>溢出检测的两种方式：<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">///1.群的性质</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">tmult_ok</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> p = x*y;</span><br><span class="line">	<span class="keyword">return</span> !x || p/x == y;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">///2.用更大的数位表示</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">tmult_ok</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">in64_t</span> pll = (<span class="keyword">in64_t</span>)x*y;</span><br><span class="line">	<span class="keyword">return</span> pll == (<span class="keyword">int</span>)pll;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>Tips : size_t被定义为unsigned类型，而malloc接收一个size_t类型，那么溢出后得到一个较小的整数的话是无法被发现的，只能在malloc前对其siz做溢出检测。</p>
+</blockquote>
+<h2 id="Floating-Point"><a href="#Floating-Point" class="headerlink" title="Floating Point"></a>Floating Point</h2><p>首先给出浮点数的一般表达式</p>
+<script type="math/tex; mode=display">
+v = (-1)^s*M*2^E</script><p>浮点数的bit-representation如下<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">单精度</span><br><span class="line">|s|            exp             |         frac              |</span><br><span class="line">31 30                        23 22                         0</span><br><span class="line">双精度</span><br><span class="line">|s|            exp                    |                   frac                                  |</span><br><span class="line">63 62                               52 51                                                       0</span><br></pre></td></tr></table></figure><br>由sign, exp, frac三部分组成，sign即是符号位，exp参与E的表达，fac参与小数部分的表达，具体表达式分为Normalized values, Denormalized values, Special values情况。其中Denormalized vaules 表达的是接近0的数，Special values表示的是无穷，以及NaN(Not a Number)的情况，Normalized values 表示的是除上述两种情况外的一般的数。</p>
+<p>以单精度为例<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Normalized values                  exp !=0 &amp;&amp; exp !=255</span><br><span class="line">M = 1+f  E = e - bias   e is the value of the bit representation (exp)</span><br><span class="line">Denormalized values</span><br><span class="line">M = f    E = 1 - bias</span><br><span class="line">Special values</span><br><span class="line">1. Infinite</span><br><span class="line">exp = all 1  f = 0</span><br><span class="line">2. NaN</span><br><span class="line">exp = all 1 f != 0</span><br></pre></td></tr></table></figure><br>bias = $2^(k-1) - 1$, 127 for single precision and 1023 for double。So the exponent ranges form -126~127 for single precision and -1022~1023 for doulbe.<br>采用这中方式编码的好处：如果采用类似U/T的编码方式，那么会丢失精度，而且所表达的范围也会变小</p>
+<h3 id="Floating-Points-Arithmetic"><a href="#Floating-Points-Arithmetic" class="headerlink" title="Floating Points Arithmetic"></a>Floating Points Arithmetic</h3><h4 id="Addition"><a href="#Addition" class="headerlink" title="Addition"></a>Addition</h4><p>两步走：1.向较大的E（指数位）对齐 2.相加再调整M、E。<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">|         (-1)^s1*M1             |</span><br><span class="line">       |      (-1)^s2*M2                       |</span><br><span class="line">                           |----E1-E2----|</span><br></pre></td></tr></table></figure><br>显然当大数+小数时，小数的精度丢失比较严重,所以不满足结合律。而且加法满足单调性，a&gt;b =&gt; a+x &gt; b+x, 只要x不为NaN即可。<br>加法的性质：</p>
+<ul>
+<li>闭合（可能产生无穷/NaN）</li>
+<li>满足交换律</li>
+<li>不满足结合律</li>
+<li>存在逆元</li>
+<li>满足单调性</li>
+</ul>
+<h4 id="Muplication-1"><a href="#Muplication-1" class="headerlink" title="Muplication"></a>Muplication</h4><ul>
+<li>满足交换律</li>
+<li>不满足结合律</li>
+<li>不满足乘法分配率</li>
+<li>满足单调性<br>a&gt;=b and c&gt;=0  =&gt; ac&gt;=bc, c&lt;=0时亦然，只要c不为NaN即可。</li>
+</ul>
+<h4 id="compare-to-integer"><a href="#compare-to-integer" class="headerlink" title="compare to integer"></a>compare to integer</h4><p>integer的运算满足交换律，结合律，分配律，但不满足单调性的原理。Floating Point的运算满足交换律，不满足分配律、结合律，但是满足单调性原理。</p>
+<blockquote>
+<p>Tips:关于FP不满足结合律的问题：自然界中的问题很多都是连续的，也就是说在某些状况下是不会出现极大值与极小值运算的情形，也就不用考虑不满足结合率带来的影响，但是在其他的情景下，如金融中是可能出现的。这也提醒我们要时刻把握具体情景，从需求出发。</p>
+</blockquote>
+<h4 id="conversion"><a href="#conversion" class="headerlink" title="conversion"></a>conversion</h4><p>float int double 之间的转变是改变位表示的，double/float cast 为 int是需要向0取整（NaN可能转为Tmin），int cast to double 不会出现问题，int cast to float可能要round。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">xiaoy</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://mvemoon.github.io/2021/07/28/Bits-Intergers-Floating-Points/">http://mvemoon.github.io/2021/07/28/Bits-Intergers-Floating-Points/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://mvemoon.github.io" target="_blank">xiaoy's satellite</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2021/08/01/Machine-Level-Representation-of-Programs/"><img class="prev-cover" src="/" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Machine-Level Representation of Programs</div></div></a></div><div class="next-post pull-right"><a href="/2021/07/28/hello-world/"><img class="next-cover" src="/" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Hello World</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">xiaoy</div><div class="author-info__description"></div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">12</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Bits-amp-Interters-amp-Floating-Points"><span class="toc-number">1.</span> <span class="toc-text">Bits &amp; Interters &amp; Floating Points</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Bit"><span class="toc-number">1.1.</span> <span class="toc-text">Bit</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Data-Size"><span class="toc-number">1.1.1.</span> <span class="toc-text">Data Size</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Address"><span class="toc-number">1.1.2.</span> <span class="toc-text">Address</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Byte-Ordering"><span class="toc-number">1.1.3.</span> <span class="toc-text">Byte Ordering</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#String-ASCII"><span class="toc-number">1.1.4.</span> <span class="toc-text">String (ASCII)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Intergers"><span class="toc-number">1.2.</span> <span class="toc-text">Intergers</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Unsigned-amp-Two%E2%80%99s-Complement"><span class="toc-number">1.2.1.</span> <span class="toc-text">Unsigned &amp; Two’s Complement</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Bit-Level-Operations"><span class="toc-number">1.2.2.</span> <span class="toc-text">Bit-Level Operations</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%B3%E4%BA%8E-amp-amp-amp"><span class="toc-number">1.2.2.1.</span> <span class="toc-text">关于 &amp;,&amp;&amp;　　|,||</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%B3%E4%BA%8E"><span class="toc-number">1.2.2.2.</span> <span class="toc-text">关于~</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%B3%E4%BA%8E-1"><span class="toc-number">1.2.2.3.</span> <span class="toc-text">关于 ^</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B7%A6%E7%A7%BB-%E5%8F%B3%E7%A7%BB"><span class="toc-number">1.2.2.4.</span> <span class="toc-text">左移　右移</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Conversion"><span class="toc-number">1.2.3.</span> <span class="toc-text">Conversion</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Integers-Arithmetic"><span class="toc-number">1.2.4.</span> <span class="toc-text">Integers Arithmetic</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Modular-addition"><span class="toc-number">1.2.4.1.</span> <span class="toc-text">Modular addition</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Muplication"><span class="toc-number">1.2.4.2.</span> <span class="toc-text">Muplication</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Floating-Point"><span class="toc-number">1.3.</span> <span class="toc-text">Floating Point</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Floating-Points-Arithmetic"><span class="toc-number">1.3.1.</span> <span class="toc-text">Floating Points Arithmetic</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Addition"><span class="toc-number">1.3.1.1.</span> <span class="toc-text">Addition</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Muplication-1"><span class="toc-number">1.3.1.2.</span> <span class="toc-text">Muplication</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#compare-to-integer"><span class="toc-number">1.3.1.3.</span> <span class="toc-text">compare to integer</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#conversion"><span class="toc-number">1.3.1.4.</span> <span class="toc-text">conversion</span></a></li></ol></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><div class="content"><a class="title" href="/2021/08/11/Exceptional-Control-Flow/" title="Exceptional Control Flow">Exceptional Control Flow</a><time datetime="2021-08-11T15:57:54.000Z" title="发表于 2021-08-11 23:57:54">2021-08-11</time></div></div><div class="aside-list-item"><div class="content"><a class="title" href="/2021/08/11/Concurrent-Programming/" title="Concurrent Programming">Concurrent Programming</a><time datetime="2021-08-11T12:18:44.000Z" title="发表于 2021-08-11 20:18:44">2021-08-11</time></div></div><div class="aside-list-item"><div class="content"><a class="title" href="/2021/08/10/System-Level-I-O/" title="System Level I/O">System Level I/O</a><time datetime="2021-08-10T13:28:15.000Z" title="发表于 2021-08-10 21:28:15">2021-08-10</time></div></div><div class="aside-list-item"><div class="content"><a class="title" href="/2021/08/10/Pytorch-Embedding/" title="Pytorch Embedding">Pytorch Embedding</a><time datetime="2021-08-10T02:46:30.000Z" title="发表于 2021-08-10 10:46:30">2021-08-10</time></div></div><div class="aside-list-item"><div class="content"><a class="title" href="/2021/08/10/Pytorch-Dataloader/" title="Pytorch Dataloader">Pytorch Dataloader</a><time datetime="2021-08-10T02:32:41.000Z" title="发表于 2021-08-10 10:32:41">2021-08-10</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By xiaoy</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.2
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        insertScript: [200, () => {
+          document.querySelectorAll('mjx-container:not\([display]\)').forEach(node => {
+            const target = node.parentNode
+            if (target.nodeName.toLowerCase() === 'li') {
+              target.parentNode.classList.add('has-jax')
+            } else {
+              target.classList.add('has-jax')
+            }
+          });
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
