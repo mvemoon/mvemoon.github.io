@@ -101,7 +101,7 @@ int main(void)
 **x　+　~x+1　=　0**　也即~x+1为x的加法逆元
 
 #### 关于 ^
-* 用于符号位的计算较为方便，对于一个非0值，非TMIN值，对其符号位^1，相当于求其加法逆元(~x+1更方便)
+* 用于Floating Points符号位的计算较为方便（NaN除外）, 相当于求其加法逆元(Integers用~x+1方便)
 * x^x = 0
 
 ####  左移　右移
@@ -151,11 +151,11 @@ i_u : cfff
 i_t : ffffcfff
 ```
 
-## Arithmetic
+### Integers Arithmetic
 
 这些运算以及数据本身构成了群，如无整型与加法构成了无整型加群，在这里引入群中的一个概念，加法逆元，若a+b=0，则称b为a的逆元。
 
-### Modular addition
+#### Modular addition
 加法其实是Modualr addition,即对最后的结果取模。
 ```C
         U                    T
@@ -165,12 +165,12 @@ i_t : ffffcfff
 
 
 溢出检测：
-     !(x + y < x)       !(x<0 && y<0 && sum >=0) && !(x>=0 && y>=0 && sum<0)
+     !(x + y < x)       !(x<0 && y<0 && sum >=0) && !(x>=0 && y>=0 && sum<0) (OR !((x<0 == y<0) && (sum<0 != x<0)))
 ```
 加法逆元的C表达式：
 > ~x+1
 
-### Muplication
+#### Muplication
 unsigned 计算时同样时将结果mod 2<sub>w</sub>, signed计算则是先将其转为unsigned计算，最后转回signed。这也同样表明了两种类型的乘法运算结果truncted后的bit-representation是一样的。
 
 溢出检测的两种方式：
@@ -198,3 +198,63 @@ int tmult_ok(int x, int y)
 $$
 v = (-1)^s*M*2^E
 $$
+浮点数的bit-representation如下
+```
+单精度
+|s|            exp             |         frac              |
+31 30                        23 22                         0
+双精度
+|s|            exp                    |                   frac                                  |
+63 62                               52 51                                                       0
+```
+由sign, exp, frac三部分组成，sign即是符号位，exp参与E的表达，fac参与小数部分的表达，具体表达式分为Normalized values, Denormalized values, Special values情况。其中Denormalized vaules 表达的是接近0的数，Special values表示的是无穷，以及NaN(Not a Number)的情况，Normalized values 表示的是除上述两种情况外的一般的数。
+
+以单精度为例
+```
+Normalized values                  exp !=0 && exp !=255
+M = 1+f  E = e - bias   e is the value of the bit representation (exp)
+Denormalized values
+M = f    E = 1 - bias
+Special values
+1. Infinite
+exp = all 1  f = 0
+2. NaN
+exp = all 1 f != 0
+```
+bias = $2^(k-1) - 1$, 127 for single precision and 1023 for double。So the exponent ranges form -126~127 for single precision and -1022~1023 for doulbe.
+采用这中方式编码的好处：如果采用类似U/T的编码方式，那么会丢失精度，而且所表达的范围也会变小
+
+### Floating Points Arithmetic
+
+#### Addition
+两步走：1.向较大的E（指数位）对齐 2.相加再调整M、E。
+```
+   |         (-1)^s1*M1             |
+          |      (-1)^s2*M2                       |
+		                            |----E1-E2----|
+```
+显然当大数+小数时，小数的精度丢失比较严重,所以不满足结合律。而且加法满足单调性，a>b => a+x > b+x, 只要x不为NaN即可。
+加法的性质：
+- 闭合（可能产生无穷/NaN）
+- 满足交换律
+- 不满足结合律
+- 存在逆元
+- 满足单调性
+
+#### Muplication
+- 满足交换律
+- 不满足结合律
+- 不满足乘法分配率
+- 满足单调性
+a>=b and c>=0  => ac>=bc, c<=0时亦然，只要c不为NaN即可。
+
+#### compare to integer
+integer的运算满足交换律，结合律，分配律，但不满足单调性的原理。Floating Point的运算满足交换律，不满足分配律、结合律，但是满足单调性原理。
+
+
+> Tips:关于FP不满足结合律的问题：自然界中的问题很多都是连续的，也就是说在某些状况下是不会出现极大值与极小值运算的情形，也就不用考虑不满足结合率带来的影响，但是在其他的情景下，如金融中是可能出现的。这也提醒我们要时刻把握具体情景，从需求出发。
+
+#### conversion
+float int double 之间的转变是改变位表示的，double/float cast 为 int是需要向0取整（NaN可能转为Tmin），int cast to double 不会出现问题，int cast to float可能要round。
+
+
