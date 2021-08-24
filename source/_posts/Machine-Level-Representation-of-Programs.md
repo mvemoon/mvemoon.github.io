@@ -1,8 +1,10 @@
 ---
 title: Machine-Level Representation of Programs
 date: 2021-08-01 10:36:57
-tags:
+tags: 汇编
+categories: 深入理解计算机系统
 mathjax: true
+cover:
 ---
 
 # Machine-Level Representation of Programs

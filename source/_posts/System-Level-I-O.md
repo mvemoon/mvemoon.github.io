@@ -1,7 +1,9 @@
 ---
 title: System Level I/O
 date: 2021-08-10 21:28:15
-tags:
+categories: 深入理解计算机系统
+tags: Linux文件
+cover:
 ---
 
 

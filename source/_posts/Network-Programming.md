@@ -1,8 +1,10 @@
 ---
 title: Network Programming
 date: 2021-08-02 11:15:32
-tags:
+tags: 网络编程
+categories: 深入理解计算机系统
 mathjax: true
+cover:
 ---
 
 # The Client-Server Programming Model

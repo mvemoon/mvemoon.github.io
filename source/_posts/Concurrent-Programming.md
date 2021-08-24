@@ -1,7 +1,9 @@
 ---
 title: Concurrent Programming
 date: 2021-08-11 20:18:44
-tags:
+tags: 并发
+categories: 深入理解计算机系统
+cover:
 ---
 
 

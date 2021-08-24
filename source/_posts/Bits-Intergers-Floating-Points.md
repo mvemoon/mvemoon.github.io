@@ -1,8 +1,10 @@
 ---
 title: Bits & Intergers & Floating Points
 date: 2021-07-28 22:01:50
-tags:
+tags: 计算机的位级理解
+categories: 深入理解计算机系统
 mathjax: true
+cover:
 ---
 
 # Bits & Interters & Floating Points
